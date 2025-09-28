@@ -1,0 +1,66 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_STUDENTS 5
+#define SUBJECTS 3
+
+// Structure to store student data
+struct Student {
+    char name[50];
+    int marks[SUBJECTS];
+    float average;
+};
+
+// Function to input student data
+void inputStudents(struct Student students[], int count) {
+    for (int i = 0; i < count; i++) {
+        printf("Enter name of student %d: ", i + 1);
+        scanf(" %[^\n]", students[i].name);
+
+        printf("Enter marks for 3 subjects:\n");
+        for (int j = 0; j < SUBJECTS; j++) {
+            printf("Subject %d: ", j + 1);
+            scanf("%d", &students[i].marks[j]);
+        }
+    }
+}
+
+// Function to calculate average marks
+void calculateAverages(struct Student students[], int count) {
+    for (int i = 0; i < count; i++) {
+        int total = 0;
+        for (int j = 0; j < SUBJECTS; j++) {
+            total += students[i].marks[j];
+        }
+        students[i].average = total / (float)SUBJECTS;
+    }
+}
+
+// Function to display student data
+void displayStudents(struct Student students[], int count) {
+    printf("\nStudent Grades:\n");
+    printf("----------------------------\n");
+    for (int i = 0; i < count; i++) {
+        printf("Name: %s\n", students[i].name);
+        printf("Marks: ");
+        for (int j = 0; j < SUBJECTS; j++) {
+            printf("%d ", students[i].marks[j]);
+        }
+        printf("\nAverage: %.2f\n", students[i].average);
+        printf("----------------------------\n");
+    }
+}
+
+int main() {
+    struct Student students[MAX_STUDENTS];
+    int count;
+
+    printf("Enter number of students (max %d): ", MAX_STUDENTS);
+    scanf("%d", &count);
+
+    inputStudents(students, count);
+    calculateAverages(students, count);
+    displayStudents(students, count);
+
+    return 0;
+}
